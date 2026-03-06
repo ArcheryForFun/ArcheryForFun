@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Lukostřelba | Oficiální přehled</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+* {margin:0;padding:0;box-sizing:border-box;}
+body {
+  font-family:'Inter',sans-serif;
+  color:#f1f1f1;
+  scroll-behavior:smooth;
+  /* JELEN V LESE - TMAVÉ POZADÍ + OBDRÁŽEK */
+  background-color: #0e1117; 
+  background-image: url('jelen1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* NAVIGACE */
+nav {
+  position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:20px 8%;background:rgba(14,17,23,0.95);backdrop-filter:blur(15px);z-index:1000;
+}
+nav a {color:#fff;text-decoration:none;margin-left:30px;font-weight:500;}
+nav a:hover {color:#c7a84f;}
+
+/* SEKCE */
+.hero {height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 8%;}
+section, footer {padding:120px 8%;min-height:80vh;}
+footer {padding:50px 8%;}
+
+/* TEXTY */
+.hero h1 {font-size:4rem;font-weight:800;max-width:800px;animation:fadeUp 1.2s ease forwards;}
+.hero p {margin-top:20px;font-size:1.3rem;color:#cfcfcf;max-width:600px;animation:fadeUp 1.8s ease forwards;}
+.section-title {font-size:2.5rem;font-weight:700;margin-bottom:50px;}
+.text-muted {color:#aaa;max-width:700px;line-height:1.8;}
+.btn {display:inline-block;padding:12px 28px;background:#c7a84f;color:#000;text-decoration:none;font-weight:600;
+  border-radius:6px;transition:0.3s;animation:fadeUp 2.3s ease forwards;}
+.btn:hover {background:#e5c46b;}
+
+/* KARTY */
+.grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;}
+.card {
+  background:rgba(26,31,43,0.9);backdrop-filter:blur(20px);padding:30px;border-radius:16px;
+  border:1px solid rgba(199,168,79,0.3);transition:all 0.3s ease;opacity:0;transform:translateY(40px);
+}
+.card.visible {opacity:1;transform:translateY(0);}
+.card:hover {border-color:#c7a84f;transform:translateY(-8px);box-shadow:0 25px 50px rgba(0,0,0,0.5);}
+.card h3 {margin-bottom:15px;}
+.card a {color:#c7a84f;text-decoration:none;font-weight:600;}
+.card a:hover {text-decoration:underline;}
+@keyframes fadeUp {from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+
+<body>
+<nav>
+  <div><strong>LUKOSTŘELBA</strong></div>
+  <div>
+    <a href="#calendar">Kalendář akcí</a>
+    <a href="#contact">Kontakt</a>
+
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Tradiční lukostřelba. Příroda. Soustředění. Svoboda. Cesta.</h1>
+  <p>Jsme lukostřelečtí nadšenci, kteří rádi navštěvují tolik akcí a turnajů, kolik nám jen čas dovolí a chtěli bychom se s vámi podělit o to nejlepší, co jsme sami zatím okusili.</p>
+</section>
+
+
+<section id="calendar">
+<div class="section-title">Kalendář akcí</div>
+
+<div class="grid">
+
+<div class="card">
+<h3 style="margin-bottom: 8px;">3d Český pohár</h3>
+<p style="margin: 0 0 4px 0;"><a href="https://www.3darchery.cz/rozpisy-a-vysledky" target="_blank">www.3darchery.cz</a></p>
+<p style="margin: 0 0 20px 0;"><a href="https://da.3darchery.cz" target="_blank">da.3darchery.cz</a></p>
+
+<p class="text-muted">7.3. Kokořín </p>
+<p class="text-muted">11.4. Opočno </p>
+<p class="text-muted">18.4. Chudeřice </p>
+<p class="text-muted">16.5. Litohlavy </p>
+<p class="text-muted">23.5. Ústí nad Labem </p>
+<p class="text-muted">6.6. Rusava </p>
+<p class="text-muted">11.7. Hradec Králové </p>
+<p class="text-muted">8.8. Skalany </p>
+<p class="text-muted">29.8. Mořinka </p>
+<p class="text-muted">12.9. Licoměrsko </p>
+<p class="text-muted">19.9. Ústí nad Labem </p>
+</div>
+
+<div class="card">
+<h3 style="margin-bottom: 8px;">Asociace tradiční lukostřelby</h3>
+<p style="margin: 0 0 20px 0;"><a href="https://lukostrelec.cz/kalendar-akci/" target="_blank">www.lukostrelec.cz</a></p>
+
+<p class="text-muted">2.5. Jarních 7 modřínů</p>
+<p class="text-muted">8.5. Lukohrátky - závod družstev</p>
+<p class="text-muted">9.5. Lukohrátky</p>
+<p class="text-muted">23.5. Dětský turnaj Šindlovy dvory</p>
+<p class="text-muted">13.6. Turnaj Pod Lipicí</p>
+<p class="text-muted">20.6. Turnaj Sv. Víta v Habří</p>
+<p class="text-muted">27.6. Údolí sviní</p>
+<p class="text-muted">29.8. Zlatý šíp Rejvíz</p>
+<p class="text-muted">5.9. Podzimních 7 modřínů</p>
+<p class="text-muted">19.9. Genius Loci</p>
+</div>
+
+<div class="card">
+<h3 style="margin-bottom: 8px;">Šíp Havrana</h3>
+<p style="margin: 0 0 20px 0;"><a href="https://3d-archery-ravens.cz/2026/01/22/sip-havrana-2025-2026/" target="_blank">www.3d-archery-ravens.cz</a></p>
+
+<p class="text-muted">21.3. ŠH 5.kolo</p>
+<p class="text-muted">5.4. ŠH 6.kolo</p>
+<p class="text-muted">2.5. ŠH 7.kolo</p>
+<p class="text-muted">13.6. ŠH 8.kolo + Finále</p>
+</div>
+
+<div class="card">
+<h3 style="margin-bottom: 8px;">Libichovský pohár</h3>
+<p style="margin: 0 0 20px 0;"><a href="https://www.lukostrelnice-libichov.cz/terminy_lp" target="_blank">www.lukostrelnice-libichov.cz</a></p>
+
+<p class="text-muted">15.3. LP 6.kolo</p>
+<p class="text-muted">12.4. LP 7.kolo</p>
+<p class="text-muted">10.5. LP 8.kolo</p>
+<p class="text-muted">7.6. LP 9.kolo</p>
+</div>
+
+
+
+</div>
+</section>
+
+<section id="contact">
+  <div class="section-title">Kontakt</div>
+<!--  <div class="grid">
+    <div class="card">-->
+      <h3>o.venc[zavináč]email.cz</h3>
+    </div>
+<!--
+
+    <div class="card">
+      <h3>3D Archery Ravens</h3>
+      <a href="https://3d-archery-ravens.cz/" target="_blank">Navštívit web</a>
+    </div>
+    <div class="card">
+      <h3>Česká 3D lukostřelba</h3>
+      <a href="http://www.3darchery.cz/" target="_blank">Navštívit web</a>
+    </div>
+    <div class="card">
+      <h3>Střelnice Libichov</h3>
+      <a href="https://www.lukostrelnice-libichov.cz/start" target="_blank">Navštívit web</a>
+    </div>
+    <div class="card">
+      <h3>GunCentrum</h3>
+      <a href="https://www.guncentrum.cz/strelnice/lukostrelba/" target="_blank">Navštívit web</a>
+    </div>
+-->
+  </div>
+</section>
+
+
+<footer>
+  © 2026 OV Tradiční lukostřelba | Info portál
+</footer>
+
+<script>
+const cards = document.querySelectorAll('.card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) entry.target.classList.add('visible');
+  });
+});
+cards.forEach(card => observer.observe(card));
+
+const Březen = [
+
+{ datum:"7.3.2026", nazev:"Kokořín", klub:"Český pohár" },
+
+{ datum:"15.3.2026", nazev:"Libichovský pohár - 6. kolo", klub:"Lukostřelnice Libichov" },
+
+{ datum:"21.3.2026", nazev:"Šíp Havrana - 5. kolo", klub:"3D Archery Ravens" }
+
+
+]
+
+const list = document.getElementById("Březen")
+
+Březen.forEach(zavod=>{
+
+const li=document.createElement("li")
+
+li.textContent = zavod.datum + " – " + zavod.nazev + " • " + zavod.klub
+
+list.appendChild(li)
+
+})
+</script>
+</body>
+</html>
