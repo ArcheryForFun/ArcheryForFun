@@ -107,6 +107,38 @@ body{
 
 }
 
+
+/* PŘEHLEDNÝ KALENDÁŘ */
+#prehled{min-height:auto;}
+.cal-wrap{background:rgba(26,31,43,0.9);backdrop-filter:blur(20px);border:1px solid rgba(199,168,79,0.3);border-radius:16px;padding:24px;max-width:1100px;}
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;}
+.cal-head h3{font-size:1.5rem;text-transform:capitalize;}
+.cal-nav button{background:transparent;color:#c7a84f;border:1px solid rgba(199,168,79,0.5);border-radius:6px;padding:6px 14px;font-size:1rem;cursor:pointer;margin-left:6px;}
+.cal-nav button:hover:enabled{background:#c7a84f;color:#000;}
+.cal-nav button:disabled{opacity:.3;cursor:default;}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.legend button{display:flex;align-items:center;gap:8px;background:transparent;color:#f1f1f1;border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 12px;font-size:.85rem;cursor:pointer;font-family:inherit;}
+.legend button.off{opacity:.35;}
+.legend i,.dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;}
+.dow{text-align:center;font-size:.8rem;color:#aaa;padding:4px 0;font-weight:600;}
+.day{min-height:92px;background:rgba(255,255,255,0.03);border-radius:8px;padding:6px;overflow:hidden;}
+.day.empty{background:transparent;}
+.day.we{background:rgba(255,255,255,0.06);}
+.day.has{border:1px solid rgba(199,168,79,0.35);}
+.day .n{font-size:.8rem;color:#aaa;margin-bottom:4px;}
+.chip{font-size:.72rem;line-height:1.25;padding:3px 5px;border-radius:4px;margin-bottom:3px;border-left:3px solid;background:rgba(0,0,0,0.35);}
+.agenda{margin-top:24px;display:grid;gap:8px;}
+.ag{display:flex;gap:14px;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:8px;border-left:4px solid;}
+.ag b{min-width:92px;}
+.ag small{color:#aaa;margin-left:auto;text-align:right;}
+.cal-note{color:#aaa;font-size:.85rem;margin-top:14px;}
+@media (max-width:700px){
+  .cal-wrap{padding:14px;}
+  .day{min-height:48px;padding:4px;}
+  .chip{padding:0;width:8px;height:8px;border-radius:50%;border:0;display:inline-block;margin:0 2px 0 0;font-size:0;}
+  .ag{flex-wrap:wrap;gap:4px 10px;}.ag small{margin-left:0;text-align:left;width:100%;}
+}
 </style>
 </head>
 
@@ -114,7 +146,8 @@ body{
 <nav>
   <div><strong>LUKOSTŘELBA (na stránkách se pořád maká...)</strong></div>
   <div>
-    <a href="#calendar">Kalendář akcí</a>
+    <a href="#prehled">Kalendář</a>
+    <a href="#calendar">Seznam akcí</a>
     <a href="#contact">Kontakt</a>
 
   </div>
@@ -125,6 +158,21 @@ body{
   <p>Jako nadšenci do lukostřelby se snažíme navštěvovat co nejvíce akcí a turnajů, jak jen nám čas dovolí. Na těchto stránkách bychom se s vámi rádi podělili o to nejlepší, co jsme zatím poznali a zažili.</p>
 </section>
 
+
+
+<section id="prehled">
+<div class="section-title">Přehledný kalendář</div>
+<div class="cal-wrap">
+  <div class="legend" id="legend"></div>
+  <div class="cal-head">
+    <h3 id="calTitle"></h3>
+    <div class="cal-nav"><button id="prev" aria-label="Předchozí měsíc">←</button><button id="next" aria-label="Další měsíc">→</button></div>
+  </div>
+  <div class="cal-grid" id="calGrid"></div>
+  <div class="agenda" id="agenda"></div>
+  <p class="cal-note">Sezóna 2026/27 (říjen–září). Termíny jsou převzaty ze seznamu níže – před cestou vždy ověřte na webu pořadatele.</p>
+</div>
+</section>
 
 <section id="calendar">
 <div class="section-title">Kalendář akcí</div>
@@ -266,28 +314,70 @@ const observer = new IntersectionObserver(entries => {
 });
 cards.forEach(card => observer.observe(card));
 
-const Březen = [
 
-{ datum:"7.3.2026", nazev:"Kokořín", klub:"Český pohár" },
+const SER = {
+  cp:  {n:'3D Český pohár',        c:'#c7a84f'},
+  atl: {n:'Asociace trad. lukostřelby', c:'#5fb37c'},
+  lp:  {n:'Libichovský pohár',     c:'#5b9bd5'},
+  gc:  {n:'GunCentrum Cup',        c:'#e0703c'},
+  cls: {n:'ČLS WA 3D',             c:'#b57edc'}
+};
+// [den, měsíc, série, popis]
+const EV = [
+ [24,10,'cp','Zderaz'],[27,2,'cp','Skokovy'],[6,3,'cp','Kokořín'],[27,3,'cp','Licoměrsko'],[3,4,'cp','Opočno'],
+ [24,4,'cp','Litohlavy'],[15,5,'cp','Ráj'],[22,5,'cp','Ústí nad Labem'],[19,6,'cp','Rusava'],[17,7,'cp','Hradec Králové'],
+ [14,8,'cp','Skalany'],[28,8,'cp','Mořinka'],[11,9,'cp','Licoměrsko'],[18,9,'cp','Ústí nad Labem'],
+ [3,10,'atl','Bílá skála – oslavný turnaj ATL'],[4,10,'atl','Bílá skála – ligový turnaj jednotlivců'],
+ [17,10,'atl','O perlu'],[31,10,'atl','Údolí sviní'],
+ [4,10,'lp','LP 1. kolo'],[8,11,'lp','LP 2. kolo'],[5,12,'lp','Vánoční Libichov'],[20,12,'lp','LP 3. kolo'],
+ [25,10,'gc','GC 1. kolo'],[29,11,'gc','GC 2. kolo'],[20,12,'gc','GC 3. kolo'],[24,1,'gc','GC 4. kolo'],[21,2,'gc','GC 5. kolo'],[21,3,'gc','GC 6. kolo'],
+ [7,11,'cls','Pohořelice'],[2,1,'cls','Kobylská skála Čejč'],[10,1,'cls','Hradec Králové GunCentrum'],[7,3,'cls','Hradec Králové GunCentrum'],
+ [24,4,'cls','Smrček'],[2,5,'cls','Ráj'],[8,5,'cls','Pohořelice'],[23,5,'cls','Ústí nad Labem'],[13,6,'cls','Horní Bečva'],
+ [19,6,'cls','Zlín'],[17,7,'cls','Zlín-Velíková'],[18,7,'cls','Hradec Králové'],[31,7,'cls','Kobylská skála Čejč'],[19,9,'cls','Ústí nad Labem']
+].map(([d,m,s,t]) => ({d, m, s, t, date:new Date(m>=10?2026:2027, m-1, d)}));
 
-{ datum:"15.3.2026", nazev:"Libichovský pohár - 6. kolo", klub:"Lukostřelnice Libichov" },
+const START = new Date(2026,9,1), END = new Date(2027,8,1);
+let view = new Date(); view = new Date(view.getFullYear(), view.getMonth(), 1);
+if (view < START) view = START; if (view > END) view = END;
+const active = new Set(Object.keys(SER));
+const $ = id => document.getElementById(id);
 
-{ datum:"21.3.2026", nazev:"Šíp Havrana - 5. kolo", klub:"3D Archery Ravens" }
+$('legend').innerHTML = Object.entries(SER).map(([k,v]) =>
+  `<button data-k="${k}"><i style="background:${v.c}"></i>${v.n}</button>`).join('');
+$('legend').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const k = b.dataset.k;
+  active.has(k) ? active.delete(k) : active.add(k);
+  b.classList.toggle('off', !active.has(k));
+  render();
+});
+$('prev').onclick = () => { view = new Date(view.getFullYear(), view.getMonth()-1, 1); render(); };
+$('next').onclick = () => { view = new Date(view.getFullYear(), view.getMonth()+1, 1); render(); };
 
+function render() {
+  const y = view.getFullYear(), m = view.getMonth();
+  $('calTitle').textContent = view.toLocaleDateString('cs-CZ', {month:'long', year:'numeric'});
+  $('prev').disabled = view <= START;
+  $('next').disabled = view >= END;
+  const evs = EV.filter(e => e.date.getFullYear()===y && e.date.getMonth()===m && active.has(e.s))
+                .sort((a,b) => a.date - b.date);
+  const first = (new Date(y,m,1).getDay() + 6) % 7;
+  const days = new Date(y,m+1,0).getDate();
+  let g = ['Po','Út','St','Čt','Pá','So','Ne'].map(d => `<div class="dow">${d}</div>`).join('');
+  for (let i=0;i<first;i++) g += '<div class="day empty"></div>';
+  for (let d=1; d<=days; d++) {
+    const de = evs.filter(e => e.d===d);
+    const wd = (first + d - 1) % 7;
+    g += `<div class="day${wd>4?' we':''}${de.length?' has':''}"><div class="n">${d}</div>` +
+      de.map(e => `<div class="chip" style="border-color:${SER[e.s].c}" title="${SER[e.s].n}: ${e.t}">${e.t}</div>`).join('') + '</div>';
+  }
+  $('calGrid').innerHTML = g;
+  $('agenda').innerHTML = evs.length ? evs.map(e =>
+    `<div class="ag" style="border-color:${SER[e.s].c}"><b>${e.date.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'numeric'})}</b><span>${e.t}</span><small>${SER[e.s].n}</small></div>`
+  ).join('') : '<p class="text-muted">V tomto měsíci nejsou (u vybraných sérií) žádné závody.</p>';
+}
+render();
 
-]
-
-const list = document.getElementById("Březen")
-
-Březen.forEach(zavod=>{
-
-const li=document.createElement("li")
-
-li.textContent = zavod.datum + " – " + zavod.nazev + " • " + zavod.klub
-
-list.appendChild(li)
-
-})
 </script>
 </body>
 </html>
