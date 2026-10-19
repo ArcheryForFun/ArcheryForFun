@@ -67,6 +67,13 @@ nav a{
   font-size:0.9rem;
 }
 
+nav > div:last-child{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  row-gap:6px;
+}
+
 /* HERO */
 .hero{
   height:auto;
@@ -139,6 +146,32 @@ body{
   .chip{padding:0;width:8px;height:8px;border-radius:50%;border:0;display:inline-block;margin:0 2px 0 0;font-size:0;}
   .ag{flex-wrap:wrap;gap:4px 10px;}.ag small{margin-left:0;text-align:left;width:100%;}
 }
+/* DNEŠNÍ DEN */
+.day.today{background:rgba(199,168,79,0.14);border:1px solid #c7a84f;box-shadow:0 0 0 1px #c7a84f inset;}
+.day.today .n{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 4px;border-radius:11px;background:#c7a84f;color:#000;font-weight:700;}
+
+/* KLIKACÍ AKCE */
+.chip[data-ev],.ag[data-ev]{cursor:pointer;transition:background .2s;}
+.chip[data-ev]:hover,.ag[data-ev]:hover{background:rgba(199,168,79,0.22);}
+.ev-click{cursor:pointer;transition:color .2s;}
+.ev-click:hover,.ev-click:focus-visible{color:#c7a84f;}
+[data-ev]:focus-visible{outline:2px solid #c7a84f;outline-offset:2px;}
+
+/* DETAIL AKCE (MODAL) */
+.modal{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(4px);}
+.modal[hidden]{display:none;}
+.modal-box{position:relative;width:100%;max-width:420px;background:#1a1f2b;border:1px solid rgba(199,168,79,0.4);border-top:4px solid var(--c,#c7a84f);border-radius:16px;padding:28px 24px 24px;box-shadow:0 25px 60px rgba(0,0,0,0.6);}
+.modal-x{position:absolute;top:10px;right:12px;background:transparent;border:0;color:#aaa;font-size:1.6rem;line-height:1;cursor:pointer;}
+.modal-x:hover{color:#fff;}
+.modal-ser{font-size:.85rem;color:#aaa;margin-bottom:4px;}
+.modal-box h3{font-size:1.4rem;margin-bottom:6px;padding-right:24px;}
+.modal-date{color:#cfcfcf;margin-bottom:20px;}
+.modal-date em{font-style:normal;font-size:.8rem;padding:2px 8px;border-radius:10px;margin-left:6px;background:rgba(255,255,255,0.1);}
+.modal-actions{display:grid;gap:10px;}
+.modal-actions a{display:block;text-align:center;padding:12px 16px;border-radius:8px;font-weight:600;text-decoration:none;border:1px solid rgba(199,168,79,0.6);color:#c7a84f;transition:.2s;}
+.modal-actions a.primary{background:#c7a84f;color:#000;}
+.modal-actions a:hover{background:#e5c46b;color:#000;}
+.modal-note{margin-top:14px;font-size:.8rem;color:#aaa;}
 </style>
 </head>
 
@@ -148,6 +181,7 @@ body{
   <div>
     <a href="#prehled">Kalendář</a>
     <a href="#calendar">Seznam akcí</a>
+    <a href="https://www.arroway.cz/lukostrelnice-cr" target="_blank" rel="noopener">Mapa lukostřelnic v ČR</a>
     <a href="#contact">Kontakt</a>
 
   </div>
@@ -179,7 +213,7 @@ body{
 
 <div class="grid">
 
-<div class="card">
+<div class="card" data-s="cp">
 <h3 style="margin-bottom: 8px;">3d Český pohár</h3>
 <p style="margin: 0 0 4px 0;"><a href="https://www.3darchery.cz" target="_blank">www.3darchery.cz</a></p>
 <p style="margin: 0 0 20px 0;"><a href="https://da.3darchery.cz" target="_blank">da.3darchery.cz</a></p>
@@ -200,7 +234,7 @@ body{
 <p class="text-muted">18.9. Ústí nad Labem</p>
 </div>
 
-<div class="card">
+<div class="card" data-s="atl">
 <h3 style="margin-bottom: 8px;">Asociace tradiční lukostřelby</h3>
 <p style="margin: 0 0 4px 0;"><a href="https://lukostrelec.cz/kalendar-akci/" target="_blank">www.lukostrelec.cz</a></p>
 <p style="margin: 0 0 20px 0;"><a href="https://atlcr.cz/tournaments" target="_blank">www.atlcr.cz</a></p>
@@ -213,7 +247,7 @@ body{
 
 
 
-<div class="card">
+<div class="card" data-s="lp">
 <h3 style="margin-bottom: 8px;">Libichovský pohár</h3>
 <p style="margin: 0 0 4px 0;"><a href="https://www.lukostrelnice-libichov.cz/terminy_lp" target="_blank">www.lukostrelnice-libichov.cz</a></p>
 <p style="margin: 0 0 20px 0;"><a href="https://sk-libichov.web.app/#prehled" target="_blank">sk-libichov.web</a></p>
@@ -226,7 +260,7 @@ body{
 </div>
 
 
-<div class="card">
+<div class="card" data-s="gc">
 <h3 style="margin-bottom: 8px;">GunCentrum Cup</h3>
 <p style="margin: 0 0 20px 0;"><a href="https://rezervace.guncentrum.cz/souteze-lukostrelba" target="_blank">www.guncentrum.cz</a></p>
 
@@ -240,7 +274,7 @@ body{
   
 </div>
 
-  <div class="card">
+  <div class="card" data-s="cls">
 <h3 style="margin-bottom: 8px;">ČLS WA 3D závody</h3>
 <p style="margin: 0 0 4px 0;"><a href="https://is.czecharchery.cz/souteze" target="_blank">www.czecharchery.cz</a></p>
 <p style="margin: 0 0 20px 0;"><a href="https://www.rcherz.com/cs/competitions/list" target="_blank">rcherz.com</a></p>
@@ -263,7 +297,7 @@ body{
   
 </div>
   
-<div class="card">
+<div class="card" data-s="sh">
 <h3 style="margin-bottom: 8px;">Šíp Havrana</h3>
 <p style="margin: 0 0 20px 0;"><a href="https://3d-archery-ravens.cz/2026/10/01/sip-havrana-2026-2027/" target="_blank">www.3d-archery-ravens.cz</a></p>
 <p class="text-muted">8.11. 1. kolo</p> 
@@ -301,6 +335,17 @@ body{
 </section>
 
 
+<div class="modal" id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="modal-x" id="mClose" aria-label="Zavřít">×</button>
+    <div class="modal-ser" id="mSer"></div>
+    <h3 id="mTitle"></h3>
+    <div class="modal-date" id="mDate"></div>
+    <div class="modal-actions" id="mActions"></div>
+    <p class="modal-note" id="mNote"></p>
+  </div>
+</div>
+
 <footer>
   ©2026 Ondřej Venc | Info portál
 </footer>
@@ -335,7 +380,36 @@ const EV = [
  [7,11,'cls','Pohořelice'],[2,1,'cls','Kobylská skála Čejč'],[10,1,'cls','Hradec Králové GunCentrum'],[7,3,'cls','Hradec Králové GunCentrum'],
  [24,4,'cls','Smrček'],[2,5,'cls','Ráj'],[8,5,'cls','Pohořelice'],[23,5,'cls','Ústí nad Labem'],[13,6,'cls','Horní Bečva'],
  [19,6,'cls','Zlín'],[17,7,'cls','Zlín-Velíková'],[18,7,'cls','Hradec Králové'],[31,7,'cls','Kobylská skála Čejč'],[19,9,'cls','Ústí nad Labem'],[8,11,'sh','ŠH 1. kolo']
-].map(([d,m,s,t]) => ({d, m, s, t, date:new Date(m>=10?2026:2027, m-1, d)}));
+].map(([d,m,s,t], i) => ({i, d, m, s, t, date:new Date(m>=10?2026:2027, m-1, d)}));
+
+// Odkazy pro detail akce. Další série doplníš stejným způsobem.
+const LINKS = {
+  lp: {
+    reg:     'https://sk-libichov.web.app/#akce',
+    results: 'https://sk-libichov.web.app/#turnaje',
+    loc:     'Střelnice Libichov'
+  },
+  gc: {
+    reg:     'https://rezervace.guncentrum.cz/souteze-lukostrelba',
+    results: 'https://rezervace.guncentrum.cz/souteze-lukostrelba'
+  },
+  cp: {
+    reg:     'https://da.3darchery.cz/',
+    results: 'https://da.3darchery.cz/'
+  },
+  atl: {
+    reg:     'https://atlcr.cz/tournaments',
+    results: 'https://atlcr.cz/tournaments'
+  },
+  cls: {
+    reg:     'https://www.rcherz.com/cs/competitions/list',
+    results: 'https://www.rcherz.com/cs/competitions/list'
+  },
+  sh: {
+    reg:     'https://3d-archery-ravens.cz/2026/10/01/sip-havrana-2026-2027/',
+    results: 'https://3d-archery-ravens.cz/2026/10/01/sip-havrana-2026-2027/'
+  }
+};
 
 const START = new Date(2026,9,1), END = new Date(2027,8,1);
 let view = new Date(); view = new Date(view.getFullYear(), view.getMonth(), 1);
@@ -362,6 +436,7 @@ function render() {
   $('next').disabled = view >= END;
   const evs = EV.filter(e => e.date.getFullYear()===y && e.date.getMonth()===m && active.has(e.s))
                 .sort((a,b) => a.date - b.date);
+  const now = new Date();
   const first = (new Date(y,m,1).getDay() + 6) % 7;
   const days = new Date(y,m+1,0).getDate();
   let g = ['Po','Út','St','Čt','Pá','So','Ne'].map(d => `<div class="dow">${d}</div>`).join('');
@@ -369,20 +444,106 @@ function render() {
   for (let d=1; d<=days; d++) {
     const de = evs.filter(e => e.d===d);
     const wd = (first + d - 1) % 7;
-    g += `<div class="day${wd>4?' we':''}${de.length?' has':''}"><div class="n">${d}</div>` +
-      de.map(e => `<div class="chip" style="border-color:${SER[e.s].c}" title="${SER[e.s].n}: ${e.t}">${e.t}</div>`).join('') + '</div>';
+    const isToday = d===now.getDate() && m===now.getMonth() && y===now.getFullYear();
+    g += `<div class="day${wd>4?' we':''}${de.length?' has':''}${isToday?' today':''}"${isToday?' aria-current="date"':''}><div class="n">${d}</div>` +
+      de.map(e => `<div class="chip" data-ev="${e.i}" tabindex="0" role="button" style="border-color:${SER[e.s].c}" title="${SER[e.s].n}: ${e.t}">${e.t}</div>`).join('') + '</div>';
   }
   $('calGrid').innerHTML = g;
   $('agenda').innerHTML = evs.length ? evs.map(e =>
-    `<div class="ag" style="border-color:${SER[e.s].c}"><b>${e.date.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'numeric'})}</b><span>${e.t}</span><small>${SER[e.s].n}</small></div>`
+    `<div class="ag" data-ev="${e.i}" tabindex="0" role="button" style="border-color:${SER[e.s].c}"><b>${e.date.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'numeric'})}</b><span>${e.t}</span><small>${SER[e.s].n}</small></div>`
   ).join('') : '<p class="text-muted">V tomto měsíci nejsou (u vybraných sérií) žádné závody.</p>';
 }
 render();
 
+// ===== Propojení ručního seznamu akcí s daty v EV (podle pořadí v sérii) =====
+document.querySelectorAll('.card[data-s]').forEach(card => {
+  const evs = EV.filter(e => e.s === card.dataset.s);
+  const items = card.querySelectorAll('.text-muted');
+  if (items.length !== evs.length) {
+    console.warn('Seznam akcí a pole EV nesedí u série', card.dataset.s, items.length, evs.length);
+    return;
+  }
+  items.forEach((p, k) => {
+    p.dataset.ev = evs[k].i;
+    p.classList.add('ev-click');
+    p.tabIndex = 0;
+    p.setAttribute('role', 'button');
+  });
+});
+
+// ===== Detail akce =====
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`;
+
+function gcalUrl(e) {
+  const L = LINKS[e.s] || {};
+  const end = new Date(e.date.getFullYear(), e.date.getMonth(), e.date.getDate() + 1); // celodenní událost, konec je exkluzivní
+  const details = ['Termín a čas vždy ověřte u pořadatele.', L.reg ? 'Registrace: ' + L.reg : ''].filter(Boolean).join('\n');
+  const p = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: `${SER[e.s].n}: ${e.t}`,
+    dates: `${ymd(e.date)}/${ymd(end)}`,
+    details
+  });
+  if (L.loc) p.set('location', L.loc);
+  return 'https://calendar.google.com/calendar/render?' + p.toString();
+}
+
+const modal = $('modal');
+let lastFocus = null;
+
+function openEv(i) {
+  const e = EV[i]; if (!e) return;
+  const L = LINKS[e.s] || {};
+  const today = new Date(); today.setHours(0,0,0,0);
+  const past = e.date < today;
+
+  modal.querySelector('.modal-box').style.setProperty('--c', SER[e.s].c);
+  $('mSer').textContent = SER[e.s].n;
+  $('mTitle').textContent = e.t;
+  $('mDate').innerHTML = e.date.toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'long', year:'numeric'}) +
+    `<em>${past ? 'proběhlo' : 'nadcházející'}</em>`;
+
+  const btn = (href, label, cls='') => `<a class="${cls}" href="${href}" target="_blank" rel="noopener">${label}</a>`;
+  let html = '';
+  if (past) {
+    // proběhlé akce: jen výsledky
+    if (L.results) html += btn(L.results, '🏆 Ukázat výsledky', 'primary');
+  } else {
+    // nadcházející akce: registrace + uložení do kalendáře
+    if (L.reg) html += btn(L.reg, '📝 Otevřít registraci', 'primary');
+    html += btn(gcalUrl(e), '📅 Uložit do Google kalendáře');
+  }
+  $('mActions').innerHTML = html;
+  $('mNote').textContent = (past && !L.results) ? 'Odkaz na výsledky pro tuto sérii zatím není doplněný.'
+                         : (!past && !L.reg)    ? 'Odkaz na registraci pro tuto sérii zatím není doplněný.' : '';
+
+  lastFocus = document.activeElement;
+  modal.hidden = false;
+  $('mClose').focus();
+}
+function closeEv() {
+  modal.hidden = true;
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-ev]');
+  if (t) openEv(+t.dataset.ev);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !modal.hidden) return closeEv();
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[data-ev]')) {
+    e.preventDefault();
+    openEv(+e.target.dataset.ev);
+  }
+});
+modal.addEventListener('click', e => { if (e.target === modal) closeEv(); });
+$('mClose').onclick = closeEv;
+
 </script>
 </body>
 </html>
-
 
 
 
