@@ -172,6 +172,25 @@ body{
 .modal-actions a.primary{background:#c7a84f;color:#000;}
 .modal-actions a:hover{background:#e5c46b;color:#000;}
 .modal-note{margin-top:14px;font-size:.8rem;color:#aaa;}
+
+/* NEJBLIŽŠÍ AKCE + DNES */
+.next-box{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;padding:12px 16px;border:1px solid rgba(199,168,79,0.4);border-radius:12px;background:rgba(199,168,79,0.08);}
+.next-box small{color:#cfcfcf;font-size:.9rem;}
+.next-box .nx{cursor:pointer;color:#c7a84f;border-bottom:1px dotted #c7a84f;}
+.next-box .nx:hover{color:#e5c46b;}
+.next-box button{background:transparent;color:#c7a84f;border:1px solid rgba(199,168,79,0.6);border-radius:6px;padding:6px 14px;font:inherit;font-size:.9rem;cursor:pointer;}
+.next-box button:hover{background:#c7a84f;color:#000;}
+
+/* PROBĚHLÉ AKCE */
+.chip.past,.ag.past,.text-muted.past{opacity:.45;}
+.chip.past,.ag.past span,.text-muted.past{text-decoration:line-through;}
+
+/* STAŽENÍ .ICS */
+.ics-btn{margin-top:14px;background:transparent;border:1px solid rgba(199,168,79,0.6);color:#c7a84f;border-radius:8px;padding:8px 12px;font:inherit;font-size:.85rem;cursor:pointer;transition:.2s;}
+.ics-btn:hover{background:#c7a84f;color:#000;}
+
+/* na mobilu mají tečky barvu série */
+@media (max-width:700px){.chip{background:var(--c,#888);}}
 </style>
 </head>
 
@@ -197,6 +216,10 @@ body{
 <section id="prehled">
 <div class="section-title">Přehledný kalendář</div>
 <div class="cal-wrap">
+  <div class="next-box" id="nextBox">
+    <div id="nextTxt"></div>
+    <button id="todayBtn" type="button">Dnes</button>
+  </div>
   <div class="legend" id="legend"></div>
   <div class="cal-head">
     <h3 id="calTitle"></h3>
@@ -204,7 +227,7 @@ body{
   </div>
   <div class="cal-grid" id="calGrid"></div>
   <div class="agenda" id="agenda"></div>
-  <p class="cal-note">Sezóna 2026/27 (říjen–září). Termíny jsou převzaty ze seznamu níže – před cestou vždy ověřte na webu pořadatele.</p>
+  <p class="cal-note">Sezóna 2026/27 (říjen–září). Termíny jsou shodné se seznamem akcí níže – před cestou vždy ověřte na webu pořadatele.</p>
 </div>
 </section>
 
@@ -218,20 +241,7 @@ body{
 <p style="margin: 0 0 4px 0;"><a href="https://www.3darchery.cz" target="_blank">www.3darchery.cz</a></p>
 <p style="margin: 0 0 20px 0;"><a href="https://da.3darchery.cz" target="_blank">da.3darchery.cz</a></p>
 
-<p class="text-muted">24.10. Zderaz</p>
-<p class="text-muted">27.2. Skokovy</p>
-<p class="text-muted">6.3. Kokořín</p>
-<p class="text-muted">27.3. Licoměrsko</p>
-<p class="text-muted">3.4. Opočno</p>
-<p class="text-muted">24.4. Litohlavy</p>
-<p class="text-muted">15.5. Ráj</p>
-<p class="text-muted">22.5. Ústí nad Labem</p>
-<p class="text-muted">19.6. Rusava</p>
-<p class="text-muted">17.7. Hradec Králové</p>
-<p class="text-muted">14.8. Skalany</p>
-<p class="text-muted">28.8. Mořinka</p>
-<p class="text-muted">11.9. Licoměrsko</p>
-<p class="text-muted">18.9. Ústí nad Labem</p>
+<div class="ev-list"></div>
 </div>
 
 <div class="card" data-s="atl">
@@ -239,10 +249,7 @@ body{
 <p style="margin: 0 0 4px 0;"><a href="https://lukostrelec.cz/kalendar-akci/" target="_blank">www.lukostrelec.cz</a></p>
 <p style="margin: 0 0 20px 0;"><a href="https://atlcr.cz/tournaments" target="_blank">www.atlcr.cz</a></p>
 
-<p class="text-muted">3.10. Bílá skála - oslavný turnaj ATL</p>
-<p class="text-muted">4.10. Bílá skála - ligový turnaj jednotlivců</p>
-<p class="text-muted">17.10. O perlu</p>
-<p class="text-muted">31.10. Údolí sviní</p>
+<div class="ev-list"></div>
 </div>
 
 
@@ -252,11 +259,8 @@ body{
 <p style="margin: 0 0 4px 0;"><a href="https://www.lukostrelnice-libichov.cz/terminy_lp" target="_blank">www.lukostrelnice-libichov.cz</a></p>
 <p style="margin: 0 0 20px 0;"><a href="https://sk-libichov.web.app/#prehled" target="_blank">sk-libichov.web</a></p>
 
-  <p class="text-muted">4.10. LP 1.kolo</p>
-  <p class="text-muted">8.11. LP 2.kolo</p>
-  <p class="text-muted">5.12. Vánoční Libichov</p>
-  <p class="text-muted">20.12. LP 3.kolo</p>
   
+<div class="ev-list"></div>
 </div>
 
 
@@ -265,13 +269,8 @@ body{
 <p style="margin: 0 0 20px 0;"><a href="https://rezervace.guncentrum.cz/souteze-lukostrelba" target="_blank">www.guncentrum.cz</a></p>
 
 
-  <p class="text-muted">25.10. GC 1.kolo</p>
-  <p class="text-muted">29.11. GC 2.kolo</p>
-  <p class="text-muted">20.12. GC 3.kolo</p>
-  <p class="text-muted">24.1. GC 4.kolo</p>
-  <p class="text-muted">21.2. GC 5.kolo</p>
-  <p class="text-muted">21.3. GC 6.kolo</p>
   
+<div class="ev-list"></div>
 </div>
 
   <div class="card" data-s="cls">
@@ -280,27 +279,14 @@ body{
 <p style="margin: 0 0 20px 0;"><a href="https://www.rcherz.com/cs/competitions/list" target="_blank">rcherz.com</a></p>
 
 
-  <p class="text-muted">7.11. Pohořelice</p>
-  <p class="text-muted">2.1. Kobylská skála Čejč</p>
-  <p class="text-muted">10.1. Hradec Králové GunCentrum</p>
-  <p class="text-muted">7.3. Hradec Králové GunCentrum</p>
-  <p class="text-muted">24.4. Smrček</p>
-  <p class="text-muted">2.5. Ráj</p>
-  <p class="text-muted">8.5. Pohořelice</p>
-  <p class="text-muted">23.5. Ústí nad Labem</p>  
-  <p class="text-muted">13.6. Horní Bečva</p>
-  <p class="text-muted">19.6. Zlín</p>
-  <p class="text-muted">17.7. Zlín-Velíková</p>  
-  <p class="text-muted">18.7. Hradec Králové</p>  
-  <p class="text-muted">31.7. Kobylská skála Čejč</p>  
-  <p class="text-muted">19.9. Ústí nad Labem</p>  
   
+<div class="ev-list"></div>
 </div>
   
 <div class="card" data-s="sh">
 <h3 style="margin-bottom: 8px;">Šíp Havrana</h3>
 <p style="margin: 0 0 20px 0;"><a href="https://3d-archery-ravens.cz/2026/10/01/sip-havrana-2026-2027/" target="_blank">www.3d-archery-ravens.cz</a></p>
-<p class="text-muted">8.11. 1. kolo</p> 
+<div class="ev-list"></div>
 </div>
 
 </div>
@@ -368,7 +354,7 @@ const SER = {
   cls: {n:'ČLS WA 3D',             c:'#f5f5f5'},
   sh:  {n:'Šíp Havrana',           c:'#b57edc'}
 };
-// [den, měsíc, série, popis]
+// [den, měsíc, série, popis]  – JEDINÉ místo, kde se upravují termíny (kalendář i seznam akcí se generují odsud)
 const EV = [
  [24,10,'cp','Zderaz'],[27,2,'cp','Skokovy'],[6,3,'cp','Kokořín'],[27,3,'cp','Licoměrsko'],[3,4,'cp','Opočno'],
  [24,4,'cp','Litohlavy'],[15,5,'cp','Ráj'],[22,5,'cp','Ústí nad Labem'],[19,6,'cp','Rusava'],[17,7,'cp','Hradec Králové'],
@@ -416,6 +402,8 @@ let view = new Date(); view = new Date(view.getFullYear(), view.getMonth(), 1);
 if (view < START) view = START; if (view > END) view = END;
 const active = new Set(Object.keys(SER));
 const $ = id => document.getElementById(id);
+const startOfToday = () => { const t = new Date(); t.setHours(0,0,0,0); return t; };
+const isPast = e => e.date < startOfToday();
 
 $('legend').innerHTML = Object.entries(SER).map(([k,v]) =>
   `<button data-k="${k}"><i style="background:${v.c}"></i>${v.n}</button>`).join('');
@@ -428,6 +416,11 @@ $('legend').addEventListener('click', e => {
 });
 $('prev').onclick = () => { view = new Date(view.getFullYear(), view.getMonth()-1, 1); render(); };
 $('next').onclick = () => { view = new Date(view.getFullYear(), view.getMonth()+1, 1); render(); };
+$('todayBtn').onclick = () => {
+  let v = new Date(); v = new Date(v.getFullYear(), v.getMonth(), 1);
+  if (v < START) v = START; if (v > END) v = END;
+  view = v; render();
+};
 
 function render() {
   const y = view.getFullYear(), m = view.getMonth();
@@ -446,39 +439,53 @@ function render() {
     const wd = (first + d - 1) % 7;
     const isToday = d===now.getDate() && m===now.getMonth() && y===now.getFullYear();
     g += `<div class="day${wd>4?' we':''}${de.length?' has':''}${isToday?' today':''}"${isToday?' aria-current="date"':''}><div class="n">${d}</div>` +
-      de.map(e => `<div class="chip" data-ev="${e.i}" tabindex="0" role="button" style="border-color:${SER[e.s].c}" title="${SER[e.s].n}: ${e.t}">${e.t}</div>`).join('') + '</div>';
+      de.map(e => `<div class="chip${isPast(e)?' past':''}" data-ev="${e.i}" tabindex="0" role="button" style="--c:${SER[e.s].c};border-color:${SER[e.s].c}" title="${SER[e.s].n}: ${e.t}">${e.t}</div>`).join('') + '</div>';
   }
   $('calGrid').innerHTML = g;
   $('agenda').innerHTML = evs.length ? evs.map(e =>
-    `<div class="ag" data-ev="${e.i}" tabindex="0" role="button" style="border-color:${SER[e.s].c}"><b>${e.date.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'numeric'})}</b><span>${e.t}</span><small>${SER[e.s].n}</small></div>`
+    `<div class="ag${isPast(e)?' past':''}" data-ev="${e.i}" tabindex="0" role="button" style="border-color:${SER[e.s].c}"><b>${e.date.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'numeric'})}</b><span>${e.t}</span><small>${SER[e.s].n}</small></div>`
   ).join('') : '<p class="text-muted">V tomto měsíci nejsou (u vybraných sérií) žádné závody.</p>';
+  updateNext();
+}
+
+function updateNext() {
+  const t0 = startOfToday();
+  const nx = EV.filter(e => active.has(e.s) && e.date >= t0).sort((a, b) => a.date - b.date)[0];
+  if (!nx) { $('nextTxt').textContent = 'Ve vybraných sériích už nejsou žádné další akce.'; return; }
+  const days = Math.round((nx.date - t0) / 86400000);
+  const when = days === 0 ? 'dnes' : days === 1 ? 'zítra' : `za ${days} ${days < 5 ? 'dny' : 'dní'}`;
+  $('nextTxt').innerHTML = `Nejbližší: <span class="nx" data-ev="${nx.i}" tabindex="0" role="button"><b>${nx.t}</b></span> ` +
+    `<small>· ${SER[nx.s].n} · ${nx.date.toLocaleDateString('cs-CZ', {weekday:'short', day:'numeric', month:'numeric'})} (${when})</small>`;
 }
 render();
 
-// ===== Propojení ručního seznamu akcí s daty v EV (podle pořadí v sérii) =====
+// ===== Seznam akcí se generuje z pole EV (termíny se upravují jen tam) =====
 document.querySelectorAll('.card[data-s]').forEach(card => {
-  const evs = EV.filter(e => e.s === card.dataset.s);
-  const items = card.querySelectorAll('.text-muted');
-  if (items.length !== evs.length) {
-    console.warn('Seznam akcí a pole EV nesedí u série', card.dataset.s, items.length, evs.length);
-    return;
+  const box = card.querySelector('.ev-list');
+  if (!box) return;
+  const key = card.dataset.s;
+  const evs = EV.filter(e => e.s === key).sort((a, b) => a.date - b.date);
+  box.innerHTML = evs
+    .map(e => `<p class="text-muted ev-click${isPast(e) ? ' past' : ''}" data-ev="${e.i}" tabindex="0" role="button">${e.d}.${e.m}. ${e.t}</p>`)
+    .join('');
+  if (evs.some(e => !isPast(e))) {
+    box.insertAdjacentHTML('afterend', `<button class="ics-btn" type="button" data-ics="${key}">📅 Stáhnout nadcházející akce (.ics)</button>`);
   }
-  items.forEach((p, k) => {
-    p.dataset.ev = evs[k].i;
-    p.classList.add('ev-click');
-    p.tabIndex = 0;
-    p.setAttribute('role', 'button');
-  });
 });
 
 // ===== Detail akce =====
 const pad = n => String(n).padStart(2, '0');
 const ymd = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`;
 
+function evDetails(e) {
+  const L = LINKS[e.s] || {};
+  return ['Termín a čas vždy ověřte u pořadatele.', L.reg ? 'Registrace: ' + L.reg : ''].filter(Boolean).join('\n');
+}
+
 function gcalUrl(e) {
   const L = LINKS[e.s] || {};
   const end = new Date(e.date.getFullYear(), e.date.getMonth(), e.date.getDate() + 1); // celodenní událost, konec je exkluzivní
-  const details = ['Termín a čas vždy ověřte u pořadatele.', L.reg ? 'Registrace: ' + L.reg : ''].filter(Boolean).join('\n');
+  const details = evDetails(e);
   const p = new URLSearchParams({
     action: 'TEMPLATE',
     text: `${SER[e.s].n}: ${e.t}`,
@@ -489,14 +496,58 @@ function gcalUrl(e) {
   return 'https://calendar.google.com/calendar/render?' + p.toString();
 }
 
+// ===== Export do .ics (nadcházející akce jedné série) =====
+const icsEsc = t => String(t).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+function icsFold(line) {                       // řádky max. 75 bajtů (RFC 5545)
+  const enc = new TextEncoder(); let out = '', cur = '', bytes = 0;
+  for (const ch of line) {
+    const b = enc.encode(ch).length;
+    if (bytes + b > 75) { out += cur + '\r\n '; cur = ch; bytes = 1 + b; }
+    else { cur += ch; bytes += b; }
+  }
+  return out + cur;
+}
+function buildIcs(key) {
+  const L = LINKS[key] || {};
+  const evs = EV.filter(e => e.s === key && !isPast(e)).sort((a, b) => a.date - b.date);
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//ArcheryForFun//CS', 'CALSCALE:GREGORIAN'];
+  evs.forEach(e => {
+    const end = new Date(e.date.getFullYear(), e.date.getMonth(), e.date.getDate() + 1);
+    lines.push('BEGIN:VEVENT',
+      `UID:${key}-${ymd(e.date)}-${e.i}@archeryforfun`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${ymd(e.date)}`,
+      `DTEND;VALUE=DATE:${ymd(end)}`,
+      `SUMMARY:${icsEsc(SER[key].n + ': ' + e.t)}`,
+      `DESCRIPTION:${icsEsc(evDetails(e))}`);
+    if (L.loc) lines.push('LOCATION:' + icsEsc(L.loc));
+    if (L.reg) lines.push('URL:' + L.reg);
+    lines.push('END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  return lines.map(icsFold).join('\r\n') + '\r\n';
+}
+function downloadIcs(key) {
+  const blob = new Blob([buildIcs(key)], {type: 'text/calendar;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `lukostrelba-${key}-sezona-2026-27.ics`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-ics]');
+  if (b) downloadIcs(b.dataset.ics);
+});
+
 const modal = $('modal');
 let lastFocus = null;
 
 function openEv(i) {
   const e = EV[i]; if (!e) return;
   const L = LINKS[e.s] || {};
-  const today = new Date(); today.setHours(0,0,0,0);
-  const past = e.date < today;
+  const past = isPast(e);
 
   modal.querySelector('.modal-box').style.setProperty('--c', SER[e.s].c);
   $('mSer').textContent = SER[e.s].n;
